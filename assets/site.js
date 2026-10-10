@@ -1,6 +1,6 @@
 /* ===== แก้ 3 ค่านี้ที่เดียว ทุกหน้าอัปเดตเอง / Edit contact once, all pages update ===== */
 // oaId = Basic ID ของ LINE OA (เช่น "@abc123") ถ้าใส่ ฟอร์มคอนโดจะเปิดแชต OA พร้อมข้อความที่กรอกไว้
-window.SITE = window.SITE || { name: "หมอก", phone: "093 923 0625", lineId: "@124xxgsf", oaId: "@124xxgsf", formUrl: "" };
+window.SITE = window.SITE || { name: "หมอก", phone: "093 923 0625", lineId: "@124xxgsf", oaId: "@124xxgsf", formUrl: "https://ktlsyirdwtcbfamxgbwl.supabase.co/functions/v1/line-notify" };
 
 (function () {
   var PAGES = [
