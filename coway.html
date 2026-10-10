@@ -74,7 +74,7 @@ summary{font-weight:600;cursor:pointer}details p{margin:8px 0 0;color:var(--mute
 .cr .th{height:40px;margin-right:10px}
 .cm{display:flex;align-items:center}
 .sp{min-width:520px}.sp th,.sp td{white-space:normal;text-align:left;vertical-align:top;min-width:150px}
-.sp td:first-child{min-width:110px;font-weight:600}.sp td.df{background:#fff3c4;color:#3d3000;box-shadow:inset 3px 0 0 #f2b705}.hl{background:#fff3c4;color:#3d3000;padding:0 6px;border-radius:4px}
+.sp td:first-child{min-width:110px;font-weight:600}.sp td.df{background:#fff3c4;color:#3d3000;box-shadow:inset 3px 0 0 #f2b705}.uvm{background:#fff3c4;color:#3d3000;border-radius:4px;padding:0 4px}.hl{background:#fff3c4;color:#3d3000;padding:0 6px;border-radius:4px}
 @media (prefers-color-scheme:dark){.sp td.df,.hl{background:#4a3f12;color:#ffe9a0}}
 .cats{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));margin-bottom:18px}
 .cat{font:inherit;text-align:center;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:14px;padding:12px 6px;cursor:pointer}
@@ -246,7 +246,7 @@ h2{font-size:22px}.sub{margin:10px 0 18px;font-size:14px}
 var CONFIG = {
   name: "หมอก",
   phone: "093 923 0625",
-  lineId: "m.sjk"
+  lineId: "@124xxgsf"
 };
 if(window.SITE)CONFIG=window.SITE;
 function applyCfg(){
@@ -258,7 +258,7 @@ function applyCfg(){
   }
   if (c.lineId) {
     document.querySelectorAll("[data-lineid]").forEach(function(e){e.textContent=c.lineId});
-    document.querySelectorAll("[data-line]").forEach(function(e){e.href="https://line.me/ti/p/~"+encodeURIComponent(c.lineId.replace(/^@/,""))});
+    document.querySelectorAll("[data-line]").forEach(function(e){e.href="https://line.me/R/ti/p/"+encodeURIComponent(c.lineId.charAt(0)==="@"?c.lineId:"@"+c.lineId)});
   }
 }
 applyCfg();
@@ -467,8 +467,13 @@ function draw3(){var T=CPX.t,L=spList(T),o=L.map(function(x,i){return[i,x.n,unde
   var hd=function(x){return (T==="w"?ih(x.x.n,1):(pimgs(x.p).length?'<img class="th big" alt="" src="'+pimgs(x.p)[0]+'">':''))+x.n};
   var h='<table class="sp"><thead><tr><th></th>'+S3.map(function(x){return '<th>'+hd(x)+'</th>'}).join("")+'</tr></thead><tbody>';
   RR.forEach(function(r){var v=S3.map(function(x){return spv(T,x,r[1])});
-    var nzs=function(t){return String(t).toLowerCase().replace(/[™\s·,()\-–—]/g,"")};var fk=function(t){t=String(t);if(r[1]==="fl"){var l=t.toLowerCase();if(/\bro\b/.test(l))return"RO";if(l.indexOf("nano")>=0)return"NANO"}return nzs(t)};var df=v.length>1&&v.some(function(t){return fk(t)!==fk(v[0])});
-    h+='<tr><td>'+r[0]+'</td>'+v.map(function(t){return '<td'+(df?' class="df"':'')+'>'+t+'</td>'}).join("")+'</tr>'});
+    var nzs=function(t){return String(t).toLowerCase().replace(/[™\s·,()\-–—]/g,"")};
+    var fk=function(t){t=String(t);if(r[1]==="fl"){var l=t.toLowerCase();if(/\bro\b/.test(l))return"RO";if(l.indexOf("nano")>=0)return"NANO"}return nzs(t)};
+    var ks=v.map(fk),cn={},mx=0;ks.forEach(function(k){cn[k]=(cn[k]||0)+1;if(cn[k]>mx)mx=cn[k]});
+    var multi=Object.keys(cn).length>1,tie=multi&&Object.keys(cn).every(function(k){return cn[k]===mx});
+    var nohl=r[1]==="col"||r[1]==="ft";var hl=ks.map(function(k){return !nohl&&multi&&(tie||cn[k]<mx)});
+    var uvs=r[1]==="fl"?v.map(function(t){return /UV/.test(String(t))}):[],uvd=uvs.length>1&&uvs.some(function(u){return u!==uvs[0]});
+    h+='<tr><td>'+r[0]+'</td>'+v.map(function(t,i){var tx=String(t);if(uvd)tx=tx.replace(/(UV.*)$/,'<mark class="uvm">$1</mark>');return '<td'+(hl[i]?' class="df"':'')+'>'+tx+'</td>'}).join("")+'</tr>'});
   document.getElementById("cr3").innerHTML=h+'</tbody></table>'}
 
 // ===== รูปแบบการซื้อ: เครื่องเดียว / Combo =====

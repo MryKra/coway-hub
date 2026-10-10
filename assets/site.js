@@ -1,6 +1,6 @@
 /* ===== แก้ 3 ค่านี้ที่เดียว ทุกหน้าอัปเดตเอง / Edit contact once, all pages update ===== */
 // oaId = Basic ID ของ LINE OA (เช่น "@abc123") ถ้าใส่ ฟอร์มคอนโดจะเปิดแชต OA พร้อมข้อความที่กรอกไว้
-window.SITE = window.SITE || { name: "หมอก", phone: "093 923 0625", lineId: "m.sjk", oaId: "" };
+window.SITE = window.SITE || { name: "หมอก", phone: "093 923 0625", lineId: "@124xxgsf", oaId: "@124xxgsf", formUrl: "" };
 
 (function () {
   var PAGES = [
@@ -23,7 +23,7 @@ window.SITE = window.SITE || { name: "หมอก", phone: "093 923 0625", line
     document.querySelectorAll("[data-phone]").forEach(function (e) { e.textContent = c.phone; });
     document.querySelectorAll("[data-tel]").forEach(function (e) { e.href = "tel:" + c.phone.replace(/\D/g, ""); });
     document.querySelectorAll("[data-lineid]").forEach(function (e) { e.textContent = c.lineId; });
-    document.querySelectorAll("[data-line]").forEach(function (e) { e.href = "https://line.me/ti/p/~" + encodeURIComponent(c.lineId.replace(/^@/, "")); });
+    document.querySelectorAll("[data-line]").forEach(function (e) { e.href = "https://line.me/R/ti/p/" + encodeURIComponent(c.lineId.charAt(0) === "@" ? c.lineId : "@" + c.lineId); });
   }
   function init() {
     var nav = document.createElement("nav");

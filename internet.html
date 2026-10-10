@@ -67,7 +67,6 @@
 <nav class="bar"><a class="l" data-line href="#"><i data-i="chat"></i> LINE · ไลน์</a><a class="t" data-tel href="#"><i data-i="phone"></i> Call · โทร</a></nav>
 <script>
 var SP={browse:10,hd:25,work:40,uhd:50};
-var TIERS=[100,200,300,500,1000];
 function pkgs(){var L=window.INTERNET_PACKAGES||[],el=document.getElementById("pk");
   if(!L.length){el.innerHTML='<div class="empty"><b>Packages &amp; prices change often · แพ็กเกจและราคามีการเปลี่ยนแปลงบ่อย</b><br>ทักมาบอกที่อยู่ ผมเช็กแพ็กเกจล่าสุดที่ติดตั้งได้ให้</div>';return}
   var G={},o=[];L.forEach(function(p){if(!G[p.provider]){G[p.provider]=[];o.push(p.provider)}G[p.provider].push(p)});
@@ -75,9 +74,14 @@ function pkgs(){var L=window.INTERNET_PACKAGES||[],el=document.getElementById("p
   el.innerHTML=o.map(function(n){return '<h3 style="margin:18px 0 8px;font-size:17px;color:var(--brand2)">'+n+'</h3><div class="tw"><table class="pkg"><thead><tr><th>Code</th><th>Speed (Mbps)</th><th>Contract</th><th style="text-align:right">฿ / mo · เดือน</th></tr></thead><tbody>'+
     G[n].map(function(p){return '<tr'+(p.note==="Best value"?' class="best"':'')+'><td>'+(p.code||"–")+'</td><td>'+p.speed+(p.note?'<br><span class="nt" style="margin:0">'+p.note+'</span>':'')+'</td><td>'+p.months+' mo</td><td class="n">'+p.price.toLocaleString("en-US")+'</td></tr>'}).join("")+'</tbody></table></div>'}).join("")+
     '<p class="nt" style="margin-top:10px">'+(window.INTERNET_NOTES||"")+'</p><p class="nt">ราคาอาจเปลี่ยนตามโปรโมชัน ผมยืนยันราคาล่าสุดก่อนสมัครทุกครั้ง · I confirm the current price before you sign.</p>'}
-function rec(){var u=+document.getElementById("u").value,k=document.getElementById("k").value,need=u*SP[k]*1.2,t=TIERS.filter(function(x){return x>=need})[0]||TIERS[TIERS.length-1];
-  var txt="Users "+u+" · Use "+k+" · Suggested ≈ "+t+" Mbps";
-  document.getElementById("r").innerHTML='<div class="card" style="text-align:center"><div class="nt">Suggested speed · ความเร็วที่แนะนำ</div><div class="big">≈ '+t+' Mbps</div><div class="nt">ประมาณการเบื้องต้น ดูราคาจริงในตาราง · A rough guide only; see real prices below</div><button class="btn line" style="border:0;cursor:pointer;margin-top:10px" onclick="cp(\''+txt+'\')">'+ICON('copy')+' Copy for LINE · คัดลอกส่งไลน์</button><div class="nt" id="cpm"></div></div>'}
+function dn(p){var x=String(p.speed).split("/")[0];return /g/i.test(x)?parseFloat(x)*1000:parseFloat(x)}
+function rec(){var u=+document.getElementById("u").value,k=document.getElementById("k").value,need=u*SP[k]*1.2,L=window.INTERNET_PACKAGES||[];
+  var TIERS=L.map(dn).filter(function(v,i,a){return a.indexOf(v)===i}).sort(function(x,y){return x-y});if(!TIERS.length)TIERS=[300,500,1000];
+  var t=TIERS.filter(function(x){return x>=need})[0]||TIERS[TIERS.length-1];
+  var m=L.filter(function(p){return dn(p)===t}).sort(function(x,y){return x.price-y.price})[0];
+  var fr=m?"from "+m.price.toLocaleString("en-US")+" ฿/mo · เริ่ม "+m.price.toLocaleString("en-US")+" บาท/เดือน ("+m.provider+(m.code?" "+m.code:"")+", "+m.months+" mo)":"";
+  var txt="Users "+u+" · Use "+k+" · Suggested ≈ "+t+" Mbps"+(m?" · "+fr:"");
+  document.getElementById("r").innerHTML='<div class="card" style="text-align:center"><div class="nt">Suggested speed · ความเร็วที่แนะนำ</div><div class="big">'+t+' Mbps</div>'+(fr?'<div style="font-weight:600;margin:4px 0">'+fr+'</div>':'')+'<div class="nt">เลือกจากแพ็กเกจที่มีจริงในตารางด้านล่าง · Picked from the real packages listed below</div><button class="btn line" style="border:0;cursor:pointer;margin-top:10px" onclick="cp(\''+txt.replace(/'/g,"")+'\')">'+ICON('copy')+' Copy for LINE · คัดลอกส่งไลน์</button><div class="nt" id="cpm"></div></div>'}
 function cp(t){try{navigator.clipboard.writeText(t).then(function(){document.getElementById("cpm").textContent="Copied · คัดลอกแล้ว"},function(){document.getElementById("cpm").textContent=t})}catch(e){document.getElementById("cpm").textContent=t}}
 pkgs();rec();
 </script>

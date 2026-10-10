@@ -140,8 +140,8 @@
   <h2>Ready on Move-in Day · พร้อมอยู่ตั้งแต่วันแรก</h2>
   <p class="sub">ติดต่อผมคนเดียวจบ · One contact for everything</p>
   <div class="perks">
-    <a class="card cc" href="coway.html"><img class="cv" alt="" src="assets/img/cover-coway.svg"><div class="cb"><h3><i data-i="water"></i> Coway · กรองน้ำ ฟอกอากาศ</h3><p>มีรุ่นเล็กพอดีคอนโด</p></div></a>
-    <a class="card cc" href="internet.html"><img class="cv" alt="" src="assets/img/cover-internet.svg"><div class="cb"><h3><i data-i="wifi"></i> Internet · อินเทอร์เน็ต</h3><p>จองติดตั้งก่อนวันย้ายเข้า</p></div></a>
+    <a class="card cc" href="coway.html"><img class="cv" alt="" src="assets/img/cover-coway.svg"><div class="cb"><h3>Coway · กรองน้ำ ฟอกอากาศ</h3><p>มีรุ่นเล็กพอดีคอนโด</p></div></a>
+    <a class="card cc" href="internet.html"><img class="cv" alt="" src="assets/img/cover-internet.svg"><div class="cb"><h3>Internet · อินเทอร์เน็ต</h3><p>จองติดตั้งก่อนวันย้ายเข้า</p></div></a>
   </div>
 </section>
 
@@ -178,8 +178,11 @@ function go(ev){ev.preventDefault();var f=document.getElementById("f"),er=docume
    "• Language: "+V(f,"lang")+(V(f,"note")?"\n• Note: "+V(f,"note"):""),"",
    V(f,"name")+" · Tel "+V(f,"phone")+(V(f,"line")?" · LINE "+V(f,"line"):"")+(V(f,"email")?" · "+V(f,"email"):"")+" · Call: "+V(f,"time")];
   TXT=L.join("\n");document.getElementById("msg").textContent=TXT;
-  var S=window.SITE||{},ln=document.getElementById("sendline");ln.href=S.oaId?("https://line.me/R/oaMessage/"+encodeURIComponent(S.oaId)+"/?"+encodeURIComponent(TXT)):("https://line.me/ti/p/~"+encodeURIComponent((S.lineId||"").replace(/^@/,"")));
-  var d=document.getElementById("done");d.style.display="block";cp();d.scrollIntoView({behavior:"smooth"});return false}
+  var S=window.SITE||{},ln=document.getElementById("sendline");ln.href=S.oaId?("https://line.me/R/oaMessage/"+encodeURIComponent(S.oaId).replace(/%40/g,"@")+"/?"+encodeURIComponent(TXT)):("https://line.me/R/ti/p/"+encodeURIComponent(S.lineId||""));
+  var d=document.getElementById("done");d.style.display="block";cp();d.scrollIntoView({behavior:"smooth"});
+  if(S.formUrl){var st=document.getElementById("cpm");st.textContent="Sending… · กำลังส่ง";
+    fetch(S.formUrl,{method:"POST",headers:{"Content-Type":"text/plain"},body:TXT}).then(function(r){if(!r.ok)throw 0;st.textContent="Sent to LINE · ส่งเข้าไลน์ผมแล้ว ผมจะติดต่อกลับ";document.getElementById("sendline").style.display="none"}).catch(function(){st.textContent="Auto-send failed, please tap the button · ส่งอัตโนมัติไม่สำเร็จ กรุณากดปุ่มด้านบน"})}
+  return false}
 function cp(){var c=document.getElementById("cpm");try{navigator.clipboard.writeText(TXT).then(function(){c.textContent="Copied · คัดลอกแล้ว"},function(){c.textContent="Press and hold the text to copy · กดค้างที่ข้อความเพื่อคัดลอก"})}catch(e){c.textContent="Press and hold the text to copy · กดค้างที่ข้อความเพื่อคัดลอก"}}
 </script>
 </body></html>
