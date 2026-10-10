@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="th" data-page="internet">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Home Internet Installation | ติดตั้งอินเทอร์เน็ตบ้าน</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/icons.js"></script>
+<script src="assets/site.js"></script>
+<script src="assets/data.js"></script>
+</head>
+<body>
+
+<header class="hero"><div class="wrap">
+  <span class="badge">Free advice · ปรึกษาฟรี</span>
+  <h1>Home Internet Installation<br>ติดตั้งอินเทอร์เน็ตบ้าน</h1>
+  <p>บอกที่อยู่และการใช้งาน แล้วผมช่วยเลือกแพ็กเกจและนัดติดตั้งให้<br>Tell me your address and how you use the internet; I help pick a package and book the install.</p>
+  <div class="btns"><a class="btn line" data-line href="#">LINE · ทักไลน์</a><a class="btn tel" href="#guide">Speed guide · เลือกความเร็ว</a></div>
+  <img class="cvh" alt="" src="assets/img/cover-internet.svg">
+</div></header>
+<main class="wrap">
+<section id="guide">
+  <h2>Speed Guide · เลือกความเร็ว</h2>
+  <p class="sub">บอกจำนวนคนและการใช้งาน แล้วดูความเร็วที่เหมาะ · Tell me users and usage to see a suitable speed</p>
+  <div class="card"><div class="fg">
+    <label class="fl">Users · จำนวนผู้ใช้พร้อมกัน<select id="u" onchange="rec()"><option value="1">1</option><option value="2" selected>2</option><option value="3">3</option><option value="4">4</option><option value="6">5–6</option><option value="8">7+</option></select></label>
+    <label class="fl">Main usage · การใช้งานหลัก<select id="k" onchange="rec()"><option value="browse">Browsing, chat · เล่นเว็บ แชต</option><option value="hd" selected>HD streaming · ดูหนัง HD</option><option value="work">Work from home, video calls · ทำงานที่บ้าน ประชุมออนไลน์</option><option value="uhd">4K / online gaming · 4K / เกมออนไลน์</option></select></label>
+  </div></div>
+  <div id="r"></div>
+</section>
+<section>
+  <h2>Packages · แพ็กเกจ</h2>
+  <p class="sub">โปรโมชันล่าสุดที่ผมมี · Latest promotions I have</p>
+  <div id="pk"></div>
+  <h3 style="margin:22px 0 8px;font-size:17px;color:var(--brand2)">Promo sheets · ใบโปรโมชัน</h3>
+  <div class="pimg"><a href="assets/img/promo-1.jpg" target="_blank" rel="noopener"><img src="assets/img/promo-1.jpg" alt="True Online MyPlan promotion" loading="lazy"></a><a href="assets/img/promo-2.jpg" target="_blank" rel="noopener"><img src="assets/img/promo-2.jpg" alt="Broadband 24 promotion" loading="lazy"></a></div>
+  <p class="nt" style="text-align:center;margin-top:8px">แตะรูปเพื่อขยาย · Tap an image to enlarge</p>
+</section>
+<section>
+  <h2>How It Works · ขั้นตอน</h2>
+  <p class="sub">คุณทำแค่ 2 อย่าง ที่เหลือผมดูแลให้ · You only do 2 things, I handle the rest</p>
+  <ol class="tl">
+    <li class="you"><div class="ico"><i data-i="chat"></i></div><div><b>Tell me · แจ้งผม <span class="who you">YOU · คุณ</span></b><p>ที่อยู่ ชื่อคอนโด/หมู่บ้าน และการใช้งาน · Address, building name and how you use the internet</p></div></li>
+    <li><div class="ico"><i data-i="search"></i></div><div><b>Check &amp; compare · เช็กและเปรียบเทียบ <span class="who me">ME · ผม</span></b><p>เช็กว่าที่อยู่ติดตั้งได้ไหม และเลือกแพ็กเกจที่คุ้มให้ · I check coverage and pick the best-value package</p></div></li>
+    <li class="you"><div class="ico"><i data-i="doc"></i></div><div><b>Send documents · ส่งเอกสาร <span class="who you">YOU · คุณ</span></b><p>บัตรประชาชน/พาสปอร์ต และหลักฐานที่อยู่ (ขึ้นกับผู้ให้บริการ ผมแจ้งให้ชัด) · ID/passport and proof of address; I confirm what is needed</p></div></li>
+    <li><div class="ico"><i data-i="calendar"></i></div><div><b>Apply &amp; book · สมัครและนัดติดตั้ง <span class="who me">ME · ผม</span></b><p>ผมดำเนินการสมัครและนัดวันติดตั้งให้ ควรนัดก่อนวันย้ายเข้า · I handle the application and book your install date, ideally before move-in</p></div></li>
+    <li><div class="ico"><i data-i="wrench"></i></div><div><b>Install &amp; test · ติดตั้งและทดสอบ <span class="who me">PROVIDER · ช่าง</span></b><p>ช่างติดตั้งและทดสอบความเร็วหน้างาน · A technician installs and tests the speed on site</p></div></li>
+  </ol>
+</section>
+<section>
+  <h2>FAQ · คำถามที่พบบ่อย</h2>
+  <details><summary>Which providers can you do? · ทำได้กับเจ้าไหนบ้าง</summary><p>ขึ้นอยู่กับว่าที่อยู่ของคุณมีสัญญาณเจ้าไหน ผมเช็กให้ก่อนเสนอ<br>It depends on which networks reach your address. I check before recommending.</p></details>
+  <details><summary>Can I book before I move in? · จองก่อนย้ายเข้าได้ไหม</summary><p>แนะนำให้จองล่วงหน้า แจ้งวันย้ายเข้าได้เลย ผมช่วยเช็กคิวให้<br>Yes, booking ahead is recommended. Tell me your move-in date and I will check availability.</p></details>
+</section>
+</main>
+<section class="wrap me">
+  <p class="sub" style="margin:0 0 6px">ปรึกษาฟรี ไม่มีข้อผูกมัด · Free advice, no obligation</p>
+  <h2>Contact · ติดต่อ</h2>
+  <div class="name" data-name>[name]</div>
+  <div class="btns" style="margin-top:12px">
+    <a class="btn line" data-line href="#">LINE: <span data-lineid></span></a>
+    <a class="btn tel" style="border:1px solid var(--line)" data-tel href="#"><span data-phone></span></a>
+  </div>
+  <p class="note">ราคาและเงื่อนไขเป็นไปตามผู้ให้บริการอินเทอร์เน็ต · Prices and terms are set by each internet provider.</p>
+</section>
+<nav class="bar"><a class="l" data-line href="#"><i data-i="chat"></i> LINE · ไลน์</a><a class="t" data-tel href="#"><i data-i="phone"></i> Call · โทร</a></nav>
+<script>
+var SP={browse:10,hd:25,work:40,uhd:50};
+var TIERS=[100,200,300,500,1000];
+function pkgs(){var L=window.INTERNET_PACKAGES||[],el=document.getElementById("pk");
+  if(!L.length){el.innerHTML='<div class="empty"><b>Packages &amp; prices change often · แพ็กเกจและราคามีการเปลี่ยนแปลงบ่อย</b><br>ทักมาบอกที่อยู่ ผมเช็กแพ็กเกจล่าสุดที่ติดตั้งได้ให้</div>';return}
+  var G={},o=[];L.forEach(function(p){if(!G[p.provider]){G[p.provider]=[];o.push(p.provider)}G[p.provider].push(p)});
+  var best=Math.min.apply(null,L.map(function(p){return p.price}));
+  el.innerHTML=o.map(function(n){return '<h3 style="margin:18px 0 8px;font-size:17px;color:var(--brand2)">'+n+'</h3><div class="tw"><table class="pkg"><thead><tr><th>Code</th><th>Speed (Mbps)</th><th>Contract</th><th style="text-align:right">฿ / mo · เดือน</th></tr></thead><tbody>'+
+    G[n].map(function(p){return '<tr'+(p.note==="Best value"?' class="best"':'')+'><td>'+(p.code||"–")+'</td><td>'+p.speed+(p.note?'<br><span class="nt" style="margin:0">'+p.note+'</span>':'')+'</td><td>'+p.months+' mo</td><td class="n">'+p.price.toLocaleString("en-US")+'</td></tr>'}).join("")+'</tbody></table></div>'}).join("")+
+    '<p class="nt" style="margin-top:10px">'+(window.INTERNET_NOTES||"")+'</p><p class="nt">ราคาอาจเปลี่ยนตามโปรโมชัน ผมยืนยันราคาล่าสุดก่อนสมัครทุกครั้ง · I confirm the current price before you sign.</p>'}
+function rec(){var u=+document.getElementById("u").value,k=document.getElementById("k").value,need=u*SP[k]*1.2,t=TIERS.filter(function(x){return x>=need})[0]||TIERS[TIERS.length-1];
+  var txt="Users "+u+" · Use "+k+" · Suggested ≈ "+t+" Mbps";
+  document.getElementById("r").innerHTML='<div class="card" style="text-align:center"><div class="nt">Suggested speed · ความเร็วที่แนะนำ</div><div class="big">≈ '+t+' Mbps</div><div class="nt">ประมาณการเบื้องต้น ดูราคาจริงในตาราง · A rough guide only; see real prices below</div><button class="btn line" style="border:0;cursor:pointer;margin-top:10px" onclick="cp(\''+txt+'\')">'+ICON('copy')+' Copy for LINE · คัดลอกส่งไลน์</button><div class="nt" id="cpm"></div></div>'}
+function cp(t){try{navigator.clipboard.writeText(t).then(function(){document.getElementById("cpm").textContent="Copied · คัดลอกแล้ว"},function(){document.getElementById("cpm").textContent=t})}catch(e){document.getElementById("cpm").textContent=t}}
+pkgs();rec();
+</script>
+</body></html>

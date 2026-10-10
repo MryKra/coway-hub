@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="th" data-page="condo">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Find a Condo | ให้เราหาคอนโดให้คุณ</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+.hero{padding:30px 0 34px}
+.fcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px}
+.fcard h3{margin:0 0 2px;font-size:17px}.fcard .hint{margin:0 0 12px;font-size:13px;color:var(--muted)}
+.fcard h3 i{font-style:normal;display:inline-flex;width:24px;height:24px;border-radius:50%;background:var(--brand);color:#fff;font-size:13px;align-items:center;justify-content:center;margin-right:8px;vertical-align:1px}
+.row{display:grid;gap:0 12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.fl input,.fl textarea,.fl select{display:block;width:100%;margin-top:4px;font:inherit;font-size:15px;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text)}
+.fl .req{color:#d33}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 12px}
+.chips label{cursor:pointer}.chips input{position:absolute;opacity:0;pointer-events:none}
+.chips span{display:inline-block;padding:8px 14px;border-radius:99px;border:1px solid var(--line);background:var(--bg);font-size:14px}
+.chips input:checked+span{background:var(--brand);color:#fff;border-color:var(--brand)}
+.chips input:focus-visible+span{outline:2px solid var(--brand2);outline-offset:2px}
+.lbl{font-size:13px;color:var(--muted);display:block;margin-top:4px}
+.sbtn{width:100%;font:inherit;font-weight:700;font-size:17px;padding:15px;border:0;border-radius:12px;background:var(--brand);color:#fff;cursor:pointer}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);margin:6px 0 14px}
+.consent input{margin-top:4px}
+#done{display:none}
+#msg{white-space:pre-wrap;background:var(--bg);border:1px dashed var(--line);border-radius:10px;padding:12px;font-size:14px;margin:10px 0}
+.err{color:#d33;font-size:13px;margin:6px 0 0;min-height:1em}
+.perks{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.perks .card h3{font-size:16px}
+</style>
+<script src="assets/icons.js"></script>
+<script src="assets/site.js"></script>
+</head>
+<body>
+
+<header class="hero"><div class="wrap">
+  <span class="badge">Free service · ฟรี ไม่มีค่าใช้จ่าย</span>
+  <h1>Tell Us What You Want<br>เราหาคอนโดให้คุณ</h1>
+  <p>กรอกความต้องการของคุณ ใช้เวลาประมาณ 2 นาที แล้วผมจะติดต่อกลับพร้อมห้องที่ตรงใจ<br>Fill in the form (about 2 minutes). I will come back with units that match.</p>
+  <div class="btns"><a class="btn tel" href="#form">Start · เริ่มกรอก ↓</a></div>
+  <img class="cvh" alt="" src="assets/img/cover-condo.svg">
+</div></header>
+
+<main class="wrap">
+<section id="form" style="border-top:0">
+  <form id="f" onsubmit="return go(event)" novalidate>
+
+  <div class="fcard"><h3><i>1</i>What are you looking for · ต้องการอะไร</h3><p class="hint">เลือกได้เลย · Tap to choose</p>
+    <span class="lbl">Rent or buy · เช่าหรือซื้อ</span>
+    <div class="chips"><label><input type="radio" name="deal" value="Rent · เช่า" checked><span>Rent · เช่า</span></label><label><input type="radio" name="deal" value="Buy · ซื้อ"><span>Buy · ซื้อ</span></label></div>
+    <span class="lbl">Property type · ประเภท</span>
+    <div class="chips"><label><input type="radio" name="ptype" value="Condo" checked><span>Condo · คอนโด</span></label><label><input type="radio" name="ptype" value="Apartment"><span>Apartment · อพาร์ตเมนต์</span></label><label><input type="radio" name="ptype" value="House/Townhouse"><span>House · บ้าน/ทาวน์เฮาส์</span></label></div>
+    <span class="lbl">Bedrooms · ห้องนอน</span>
+    <div class="chips"><label><input type="radio" name="bed" value="Studio" checked><span>Studio</span></label><label><input type="radio" name="bed" value="1"><span>1</span></label><label><input type="radio" name="bed" value="2"><span>2</span></label><label><input type="radio" name="bed" value="3+"><span>3+</span></label></div>
+    <div class="row">
+      <label class="fl">Budget min · งบต่ำสุด (฿)<input name="bmin" inputmode="numeric" placeholder="e.g. 10,000"></label>
+      <label class="fl">Budget max · งบสูงสุด (฿) <span class="req">*</span><input name="bmax" inputmode="numeric" placeholder="e.g. 20,000"></label>
+      <label class="fl">Min size · ขนาดขั้นต่ำ (sq.m.)<input name="size" inputmode="numeric" placeholder="e.g. 30"></label>
+    </div>
+    <p class="hint" style="margin:0">เช่า = ต่อเดือน · ซื้อ = ราคารวม · Rent = per month, Buy = total price</p>
+  </div>
+
+  <div class="fcard"><h3><i>2</i>Where · ทำเล</h3><p class="hint">บอกที่ทำงานหรือสถานที่ที่ต้องไปบ่อย ผมจะหาแถวที่เดินทางสะดวก · Tell me where you go often</p>
+    <label class="fl">Preferred area / BTS / MRT · ย่านหรือสถานีที่ต้องการ <span class="req">*</span><input name="area" placeholder="e.g. Ari, On Nut, near BTS / อารีย์ อ่อนนุช"></label>
+    <label class="fl">Workplace / school · ที่ทำงานหรือโรงเรียน<input name="work" placeholder="e.g. Asoke, Silom / อโศก สีลม"></label>
+    <div class="row">
+      <label class="fl">Max commute · เดินทางไม่เกิน<select name="commute"><option>No limit · ไม่จำกัด</option><option>15 min</option><option>30 min</option><option>45 min</option><option>60 min</option></select></label>
+      <label class="fl">Near BTS/MRT · ใกล้รถไฟฟ้า<select name="near"><option>Preferred · อยากได้</option><option>Must · ต้องใกล้</option><option>Not needed · ไม่จำเป็น</option></select></label>
+    </div>
+  </div>
+
+  <div class="fcard"><h3><i>3</i>When · ช่วงเวลา</h3>
+    <div class="row">
+      <label class="fl">Move-in date · วันย้ายเข้า<input type="date" name="movein"></label>
+      <label class="fl">Contract length · ระยะสัญญา<select name="lease"><option>12 months · 12 เดือน</option><option>6 months · 6 เดือน</option><option>24 months · 24 เดือน</option><option>Flexible · ยืดหยุ่น</option><option>Buying · ซื้อ</option></select></label>
+      <label class="fl">Can view units · ไปดูห้องได้<select name="view"><option>Weekdays · วันธรรมดา</option><option>Weekends · เสาร์-อาทิตย์</option><option>Evenings · ช่วงเย็น</option><option>Any time · ได้ทุกเวลา</option></select></label>
+    </div>
+  </div>
+
+  <div class="fcard"><h3><i>4</i>Your lifestyle · ไลฟ์สไตล์</h3><p class="hint">ยิ่งบอกมาก ยิ่งหาตรงใจ · The more you tell, the better the match</p>
+    <div class="row">
+      <label class="fl">People living · จำนวนผู้อยู่<select name="people"><option>1</option><option>2</option><option>3</option><option>4+</option></select></label>
+      <label class="fl">Pets · สัตว์เลี้ยง<select name="pets"><option>None · ไม่มี</option><option>Cat · แมว</option><option>Dog · สุนัข</option><option>Other · อื่นๆ</option></select></label>
+      <label class="fl">Car parking · ที่จอดรถ<select name="car"><option>Not needed · ไม่ต้องการ</option><option>1 car · 1 คัน</option><option>2 cars · 2 คัน</option><option>Motorbike · มอเตอร์ไซค์</option></select></label>
+      <label class="fl">Furniture · เฟอร์นิเจอร์<select name="furn"><option>Fully furnished · ครบ</option><option>Partly · บางส่วน</option><option>Unfurnished · ไม่มี</option></select></label>
+    </div>
+    <span class="lbl">Must-haves · สิ่งที่อยากได้ (เลือกได้หลายอย่าง)</span>
+    <div class="chips">
+      <label><input type="checkbox" name="must" value="Pool"><span>Pool · สระว่ายน้ำ</span></label>
+      <label><input type="checkbox" name="must" value="Gym"><span>Gym · ฟิตเนส</span></label>
+      <label><input type="checkbox" name="must" value="Balcony"><span>Balcony · ระเบียง</span></label>
+      <label><input type="checkbox" name="must" value="Washer"><span>Washer · เครื่องซักผ้า</span></label>
+      <label><input type="checkbox" name="must" value="Bathtub"><span>Bathtub · อ่างอาบน้ำ</span></label>
+      <label><input type="checkbox" name="must" value="High floor"><span>High floor · ชั้นสูง</span></label>
+      <label><input type="checkbox" name="must" value="Quiet"><span>Quiet · เงียบสงบ</span></label>
+      <label><input type="checkbox" name="must" value="Co-working"><span>Co-working</span></label>
+      <label><input type="checkbox" name="must" value="Supermarket nearby"><span>Supermarket · ใกล้ซูเปอร์</span></label>
+      <label><input type="checkbox" name="must" value="24h security"><span>Security · รปภ. 24 ชม.</span></label>
+    </div>
+    <label class="fl">Language · ภาษาที่สะดวก<select name="lang"><option>Thai · ไทย</option><option>English</option><option>Both · ทั้งสอง</option><option>Other · อื่นๆ</option></select></label>
+    <label class="fl">Anything else · เพิ่มเติม<textarea name="note" rows="3" placeholder="e.g. no smoking, near a good school, budget flexible… / ไม่สูบบุหรี่ ใกล้โรงเรียน ฯลฯ"></textarea></label>
+  </div>
+
+  <div class="fcard"><h3><i>5</i>About you · ข้อมูลติดต่อ</h3><p class="hint">ใช้ติดต่อกลับเรื่องห้องเท่านั้น · Used only to contact you about units</p>
+    <div class="row">
+      <label class="fl">Name · ชื่อ <span class="req">*</span><input name="name" autocomplete="name"></label>
+      <label class="fl">Phone · เบอร์โทร <span class="req">*</span><input name="phone" inputmode="tel" autocomplete="tel"></label>
+      <label class="fl">LINE ID<input name="line"></label>
+      <label class="fl">Email · อีเมล<input name="email" type="email" autocomplete="email"></label>
+      <label class="fl">Best time to call · เวลาที่สะดวกให้โทร<select name="time"><option>Morning · เช้า</option><option>Afternoon · บ่าย</option><option>Evening · เย็น</option><option>Any · ได้ทุกเวลา</option></select></label>
+    </div>
+    <label class="consent"><input type="checkbox" name="ok"><span>ยินยอมให้ใช้ข้อมูลนี้เพื่อติดต่อกลับเรื่องการหาห้อง · I agree my details may be used to contact me about finding a unit. <span class="req" style="color:#d33">*</span></span></label>
+    <div class="err" id="err"></div>
+    <button class="sbtn" type="submit">Find my condo · ให้ช่วยหาห้อง →</button>
+  </div>
+  </form>
+
+  <div class="fcard" id="done"><h3><i data-i="checkc"></i> Almost done · เหลืออีกขั้นเดียว</h3>
+    <p class="hint">กดปุ่มไลน์ ข้อความจะเข้าแชตให้ แล้วกดส่งอีกครั้งเดียว · Tap the LINE button, the message appears in the chat, then press send.</p>
+    <div id="msg"></div>
+    <div class="btns"><a class="btn line" id="sendline" target="_blank" rel="noopener" href="#">Send to LINE · ส่งเข้าไลน์</a><button class="btn tel" style="border:1px solid var(--line);cursor:pointer;font:inherit;font-weight:700" onclick="cp()">Copy again · คัดลอกอีกครั้ง</button></div>
+    <p class="nt" id="cpm" style="text-align:center;margin-top:8px"></p>
+    <p class="nt" style="text-align:center">ถ้าข้อความไม่ขึ้นในแชต ให้วาง (copy ไว้ให้แล้ว) · If it does not appear, paste it (already copied).</p>
+  </div>
+</section>
+
+<section>
+  <h2>How It Works · ขั้นตอน</h2>
+  <p class="sub">คุณกรอกฟอร์ม ที่เหลือผมทำให้ · You fill the form, I do the rest</p>
+  <ol class="tl">
+    <li class="you"><div class="ico"><i data-i="pencil"></i></div><div><b>Fill the form · กรอกฟอร์ม <span class="who you">YOU · คุณ</span></b><p>บอกงบ ทำเล และสิ่งที่ต้องการ · Budget, area and must-haves</p></div></li>
+    <li><div class="ico"><i data-i="search"></i></div><div><b>I search · ผมหาห้อง <span class="who me">ME · ผม</span></b><p>คัดห้องที่ตรงที่สุดมาให้เลือก · I shortlist the best matches</p></div></li>
+    <li class="you"><div class="ico"><i data-i="condo"></i></div><div><b>View &amp; choose · ไปดูและเลือก <span class="who you">YOU · คุณ</span></b><p>นัดดูห้องตามเวลาที่สะดวก · We book viewings at your time</p></div></li>
+    <li><div class="ico"><i data-i="key"></i></div><div><b>Move in · ย้ายเข้า <span class="who me">ME · ผม</span></b><p>ช่วยเรื่องสัญญา และจัดน้ำ อากาศ อินเทอร์เน็ตให้พร้อมใช้ · I help with the contract, plus water, air and internet ready on day one</p></div></li>
+  </ol>
+</section>
+
+<section>
+  <h2>Ready on Move-in Day · พร้อมอยู่ตั้งแต่วันแรก</h2>
+  <p class="sub">ติดต่อผมคนเดียวจบ · One contact for everything</p>
+  <div class="perks">
+    <a class="card cc" href="coway.html"><img class="cv" alt="" src="assets/img/cover-coway.svg"><div class="cb"><h3><i data-i="water"></i> Coway · กรองน้ำ ฟอกอากาศ</h3><p>มีรุ่นเล็กพอดีคอนโด</p></div></a>
+    <a class="card cc" href="internet.html"><img class="cv" alt="" src="assets/img/cover-internet.svg"><div class="cb"><h3><i data-i="wifi"></i> Internet · อินเทอร์เน็ต</h3><p>จองติดตั้งก่อนวันย้ายเข้า</p></div></a>
+  </div>
+</section>
+
+<section class="me">
+  <p class="sub" style="margin:0 0 6px">ปรึกษาฟรี ไม่มีข้อผูกมัด · Free advice, no obligation</p>
+  <h2>Contact · ติดต่อ</h2>
+  <div class="name" data-name>[name]</div>
+  <div class="btns" style="margin-top:12px">
+    <a class="btn line" data-line href="#">LINE: <span data-lineid></span></a>
+    <a class="btn tel" style="border:1px solid var(--line)" data-tel href="#"><span data-phone></span></a>
+  </div>
+  <p class="note">ตัวแทนจำหน่าย Coway ที่ได้รับอนุญาต · Authorized Coway dealer</p>
+</section>
+</main>
+
+<nav class="bar"><a class="l" data-line href="#"><i data-i="chat"></i> LINE · ไลน์</a><a class="t" data-tel href="#"><i data-i="phone"></i> Call · โทร</a></nav>
+
+<script>
+var TXT="";
+function V(f,n){var e=f.elements[n];return e?e.value.trim():""}
+function R(f,n){var e=f.querySelector('input[name="'+n+'"]:checked');return e?e.value:""}
+function go(ev){ev.preventDefault();var f=document.getElementById("f"),er=document.getElementById("err"),m=[];
+  if(!V(f,"bmax"))m.push("Budget max · งบสูงสุด");if(!V(f,"area"))m.push("Area · ทำเล");if(!V(f,"name"))m.push("Name · ชื่อ");if(!V(f,"phone"))m.push("Phone · เบอร์โทร");if(!f.elements.ok.checked)m.push("Consent · ยินยอม");
+  if(m.length){er.textContent="Please fill · กรุณากรอก: "+m.join(", ");return false}er.textContent="";
+  var must=[].map.call(f.querySelectorAll('input[name="must"]:checked'),function(x){return x.value}).join(", ")||"-";
+  var L=["Condo request · ขอให้ช่วยหาคอนโด","",
+   "• "+R(f,"deal")+" · "+R(f,"ptype")+" · Bedrooms "+R(f,"bed"),
+   "• Budget "+(V(f,"bmin")||"-")+" – "+V(f,"bmax")+" ฿"+(V(f,"size")?" · Min "+V(f,"size")+" sq.m.":""),
+   "• Area: "+V(f,"area")+(V(f,"work")?" · Work/School: "+V(f,"work"):""),
+   "• Commute: "+V(f,"commute")+" · BTS/MRT: "+V(f,"near"),
+   "• Move-in: "+(V(f,"movein")||"-")+" · Lease: "+V(f,"lease")+" · View: "+V(f,"view"),
+   "• People "+V(f,"people")+" · Pets "+V(f,"pets")+" · Parking "+V(f,"car")+" · "+V(f,"furn"),
+   "• Must-haves: "+must,
+   "• Language: "+V(f,"lang")+(V(f,"note")?"\n• Note: "+V(f,"note"):""),"",
+   V(f,"name")+" · Tel "+V(f,"phone")+(V(f,"line")?" · LINE "+V(f,"line"):"")+(V(f,"email")?" · "+V(f,"email"):"")+" · Call: "+V(f,"time")];
+  TXT=L.join("\n");document.getElementById("msg").textContent=TXT;
+  var S=window.SITE||{},ln=document.getElementById("sendline");ln.href=S.oaId?("https://line.me/R/oaMessage/"+encodeURIComponent(S.oaId)+"/?"+encodeURIComponent(TXT)):("https://line.me/ti/p/~"+encodeURIComponent((S.lineId||"").replace(/^@/,"")));
+  var d=document.getElementById("done");d.style.display="block";cp();d.scrollIntoView({behavior:"smooth"});return false}
+function cp(){var c=document.getElementById("cpm");try{navigator.clipboard.writeText(TXT).then(function(){c.textContent="Copied · คัดลอกแล้ว"},function(){c.textContent="Press and hold the text to copy · กดค้างที่ข้อความเพื่อคัดลอก"})}catch(e){c.textContent="Press and hold the text to copy · กดค้างที่ข้อความเพื่อคัดลอก"}}
+</script>
+</body></html>
