@@ -380,14 +380,16 @@ function ddPick(k,i){var d=DD[k],o=d.o[i];ddClose();window[d.h]({dataset:{f:d.id
 document.addEventListener("click",function(e){if(!e.target.closest(".cdd"))ddClose()});
 document.addEventListener("keydown",function(e){if(e.key==="Escape")ddClose()});
 function U(e){var f=e.dataset.f,v=e.value;
-  if(f==="prog"){S.prog=v;S.i=0;S.h=0}else if(f==="c"){S.c=v;S.i=0;S.h=0}else if(f==="i"){S.i=+v;S.h=0}else if(f==="h")S.h=+v;else S.k=v;draw()}
+  if(f==="prog"){S.prog=v;S.i=0;S.h=0;if(v==="pk"){S.k="y1";if(PKC[S.c]===undefined)S.c="w"}else if(S.k==="y1"||S.k==="y3")S.k="cwc5a"}else if(f==="c"){S.c=v;S.i=0;S.h=0}else if(f==="i"){S.i=+v;S.h=0}else if(f==="h")S.h=+v;else S.k=v;draw()}
 function P(i,h){S.i=i;S.h=h;draw();document.getElementById("calc").scrollIntoView()}
+function progSel(){return sel("prog","Program · โปรแกรม",[["cwc","Subscription · New member · สมาชิกใหม่"],["rc","Re Care · Existing member · ลูกค้าเดิม"],["pk","Package · แพ็กเกจ 1 / 3 ปี"]],S.prog)}
 function draw(){
+  if(S.prog==="pk"){drawPk();return}
   var cats=CATS.filter(function(c){return D.some(function(x){return x.c===c&&kf(x).length})});
   if(cats.indexOf(S.c)<0){S.c=cats[0];S.i=0;S.h=0}
   var its=items();if(S.i>=its.length)S.i=0;var it=its[S.i];if(S.h>=it.hs.length)S.h=0;
   var ks=kf(it);if(ks.indexOf(S.k)<0)S.k=ks[0];
-  var f='<div class="fg">'+sel("prog","Program · โปรแกรม",[["cwc","Subscription · New member · สมาชิกใหม่"],["rc","Re Care · Existing member · ลูกค้าเดิม"]],S.prog)
+  var f='<div class="fg">'+progSel()
    +sel("c","1) Type · ชนิดสินค้า",cats.map(function(c){return[c,CAT[c]]}),S.c)
    +sel("i","2) Model · รุ่น",its.map(function(x,i){return[i,x.n,undefined,imgOf(x.n)]}),S.i)
    +(it.hs.length>1?sel("h","Service round · รอบบริการ",it.hs.map(function(h,i){return[i,hsl(h)]}),S.h):"")
@@ -401,6 +403,34 @@ function draw(){
   rows.sort(function(a,b){return a.tot-b.tot});var mx=rows.length?rows[rows.length-1].tot:1;
   document.getElementById("cmp").innerHTML=rows.map(function(x){var on=x.xi===S.i&&x.hi===S.h;
    return '<button class="cr'+(on?" on":"")+'" onclick="P('+x.xi+','+x.hi+')"><div class="h"><span class="cm">'+ih(x.n)+x.n+'</span><b>'+fmt(x.tot)+' บาท</b></div><div class="nt" style="margin:2px 0 0">Main rate · ราคาหลัก '+fmt(x.pr)+' ฿/mo</div><div class="b" style="width:'+Math.max(8,Math.round(x.tot/mx*100))+'%"></div></button>'}).join("")}
+
+
+// ===== Package 1 / 3 ปี ในเครื่องคำนวณ =====
+var PKC={w:0,a:1,d:2,m:3};
+var PKN={w:CAT.w,a:CAT.a,d:CAT.d,m:"Massage Chair & Bidet · เก้าอี้นวดและฝารองนั่ง"};
+function pkRows(){return PK[PKC[S.c]].r}
+function pkPrice(row,col,h){var v=row[col];if(v==null)return null;return Array.isArray(v)?v[Math.min(h,v.length-1)]:v}
+function pkHs(row){return String(row[1]).split("/")}
+function drawPk(){
+  if(PKC[S.c]===undefined){S.c="w";S.i=0;S.h=0}
+  var rows=pkRows();if(S.i>=rows.length)S.i=0;var row=rows[S.i],hs=pkHs(row);if(S.h>=hs.length)S.h=0;
+  var terms=[["y1","1 yr · 1 ปี",2]];if(row.length>3)terms.push(["y3","3 yr · 3 ปี",3]);
+  var tm=terms.filter(function(t){return t[0]===S.k})[0]||terms[0];S.k=tm[0];
+  var f='<div class="fg">'+progSel()
+   +sel("c","1) Type · ชนิดสินค้า",Object.keys(PKC).map(function(c){return[c,PKN[c]]}),S.c)
+   +sel("i","2) Model · รุ่น",rows.map(function(x,i){return[i,x[0],undefined,imgOf(x[0])]}),S.i)
+   +(hs.length>1?sel("h","Service round · รอบบริการ",hs.map(function(h,i){return[i,hsl(h)]}),S.h):"")
+   +sel("k","Package term · ระยะแพ็กเกจ",terms.map(function(t){return[t[0],t[1]]}),S.k)+'</div>';
+  document.getElementById("cf").innerHTML=f;
+  var cur=pkPrice(row,tm[2],S.h);
+  var two=terms.map(function(t){var p=pkPrice(row,t[2],S.h);return '<div class="rw'+(t[0]===S.k?' on':'')+'"><span>'+t[1]+'</span><span>'+fmt(p)+' ฿</span></div>'}).join("");
+  var sv="";if(terms.length>1){var d=pkPrice(row,3,S.h)-pkPrice(row,2,S.h);sv='<div class="nt" style="margin-top:6px">3 yr vs 1 yr · 3 ปีเทียบ 1 ปี: '+(d>=0?'+':'')+fmt(d)+' ฿</div>'}
+  document.getElementById("cr").innerHTML='<div class="res">'+ih(row[0],1)+'<b>'+row[0]+(hs.length>1?" · HS"+hs[S.h]:"")+'</b><div class="nt" style="margin:2px 0 8px">Package price · ราคาแพ็กเกจ (ตามตารางราคา)</div>'+two
+   +'<div class="tot">'+tm[1]+' package · แพ็กเกจ<b>'+fmt(cur)+' ฿</b></div>'+sv+'</div>';
+  var list=[];rows.forEach(function(x,xi){pkHs(x).forEach(function(h,hi){var p=pkPrice(x,tm[2],hi);if(p!=null)list.push({n:x[0]+(pkHs(x).length>1?" · HS"+h:""),p:p,xi:xi,hi:hi})})});
+  list.sort(function(a,b){return a.p-b.p});var mx=list.length?list[list.length-1].p:1;
+  document.getElementById("cmp").innerHTML=list.map(function(x){var on=x.xi===S.i&&x.hi===S.h;
+   return '<button class="cr'+(on?" on":"")+'" onclick="P('+x.xi+','+x.hi+')"><div class="h"><span class="cm">'+ih(x.n)+x.n+'</span><b>'+fmt(x.p)+' บาท</b></div><div class="nt" style="margin:2px 0 0">'+tm[1]+' package · แพ็กเกจ</div><div class="b" style="width:'+Math.max(8,Math.round(x.p/mx*100))+'%"></div></button>'}).join("")}
 
 // ===== คำนวณ Combo =====
 var C={y:5,a:0,ah:0,b:1,bh:0};
